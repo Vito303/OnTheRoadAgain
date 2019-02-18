@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnTheRoadAgain.Views.MainPage"
+             xmlns:local="clr-namespace:OnTheRoadAgain.Controls;assembly=OnTheRoadAgain"
+             xmlns:viewModels="clr-namespace:OnTheRoadAgain.ViewModels;assembly=OnTheRoadAgain"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+
+             BindingContext="{Binding Source={x:Static viewModels:BindingClass.MainPageViewModel}}"
+             Title="{Binding Title}">
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Button Text="Info" Command="{Binding NavigateToInfoCommand}" />
+        <!--<local:Webber Url3="{Binding Url}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"></local:Webber>-->
+        <local:Webber Url3="{Binding Url}" HeightRequest="1000" WidthRequest="1000"></local:Webber>
+        <!--<WebView Source="{Binding Url}" HeightRequest="1000" WidthRequest="1000" >
+            <WebView.Behaviors>
+                <b:EventToCommandBehavior EventName="Navigated" Command="{Binding navigated}"  />
+            </WebView.Behaviors>
+        </WebView>-->
+    </StackLayout>
+
+</ContentPage>
