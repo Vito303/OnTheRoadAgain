@@ -1,4 +1,5 @@
 ﻿using Android.OS;
+using DryIoc;
 using Prism;
 using Prism.Ioc;
 using OnTheRoadAgain.ViewModels;
@@ -30,8 +31,17 @@ namespace OnTheRoadAgain {
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<InfoPage, InfoPageViewModel>();
             containerRegistry.Register(typeof(IA), typeof(A));
+            containerRegistry.Register(typeof(IA), typeof(B));
             containerRegistry.Register(typeof(ILog), typeof(Logger));
+
+            var allServiceFactories = containerRegistry.GetContainer().GetAllServiceFactories(typeof(IA));
         }
+
+        // https://github.com/PrismLibrary/Prism/issues/1599
+        protected override Rules CreateContainerRules()
+            => Rules.Default.WithAutoConcreteTypeResolution()
+                .With(Made.Of(FactoryMethod.ConstructorWithResolvableArguments));
+                //.WithDefaultIfAlreadyRegistered(IfAlreadyRegistered.Replace);
     }
 
     public class A : IA {

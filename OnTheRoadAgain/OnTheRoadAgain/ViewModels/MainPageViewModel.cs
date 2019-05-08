@@ -11,13 +11,14 @@ using System.Windows.Input;
 using Android.OS;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
-
+using Debug = System.Diagnostics.Debug;
 
 namespace OnTheRoadAgain.ViewModels {
     public class MainPageViewModel : ViewModelBase {
         private INavigationService _navigationService;
 
-        private readonly IA _service;
+        private readonly IEnumerable<IA> _service;
+        //     private readonly IA _service;
 
         public DelegateCommand NavigateToInfoCommand { get; private set; }
 
@@ -29,19 +30,21 @@ namespace OnTheRoadAgain.ViewModels {
 
         public ICommand navigated { get; set; }
 
-        public MainPageViewModel(INavigationService navigationService, IA service)
+        public MainPageViewModel(INavigationService navigationService, IEnumerable<IA>  service)
             : base(navigationService) {
             Title = "Razmere na cestah";
             Url = "https://www.promet.si/portal/sl/razmere.aspx"; //PMapToBigMap(!0)
 
+            //var value = await webView.InvokeScriptAsync("eval", new string[] { "document.getElementById('lblDestination')" }
             _navigationService = navigationService;
             _service = service;
-            _service.Do();
-
+            //_service = service;
+            _service.ForEach( w => w.Do());
             NavigateToInfoCommand = new DelegateCommand(NavigateToInfo);
 
             navigated =  new Command(() => {
-                System.Diagnostics.Debug.WriteLine("Navigated");
+                Debug.WriteLine("Navigated");
+                //service.Do();
             });
         }
 
